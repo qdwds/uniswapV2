@@ -1,0 +1,7 @@
+
+network: localhost
+WETH address: 0xa513E6E4b8f2a923D98304ec87F64353C4D5C853
+UniswapV2Factory address: 0x0165878A594ca255338adfa4d48449f69242Eb8F
+UniswapV2Router02 address: 0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6
+new hex: abd363cf3b06c620b9951bd9d40d4694b3ae9cb157bcf8bea32efb7de706a268
+    
