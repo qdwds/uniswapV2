@@ -6,7 +6,7 @@ import { connectNetwork, createContracts } from "../utils/contracts/createContra
 import type { Contract, Signer, Wallet } from "ethers";
 
 //  token|token
-const addLiquidity = async(factory:any, router2:any ,signer:Wallet, tokenA:Contract, tokenB:Contract, amountA:string, amountB:string) => {
+export const addLiquidity = async(factory:any, router2:any ,signer:Wallet, tokenA:Contract, tokenB:Contract, amountA:string, amountB:string) => {
     
     // pair is Dead 
     const isDead = (await factory.getPair(tokenA.address, tokenB.address)) == ethers.constants.AddressZero;

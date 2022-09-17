@@ -30,6 +30,7 @@ export const createContracts = async (signer: Signer) => {
     const token1: Contract = await ethers.getContractAt("Token1", address.token1, signer);
     const token2: Contract = await ethers.getContractAt("Token2", address.token2, signer);
     const token3: Contract = await ethers.getContractAt("Token3", address.token3, signer);
+    const uni: Contract = await ethers.getContractAt("Uni", address.uni, signer);
     const factory: Contract = await ethers.getContractAt("UniswapV2Factory", address.UniswapV2Factory, signer);
     const router2: Contract = await ethers.getContractAt("UniswapV2Router02", address.UniswapV2Router02, signer);
     const weth: Contract = await ethers.getContractAt("WETH9", address.WETH9, signer);
@@ -39,6 +40,7 @@ export const createContracts = async (signer: Signer) => {
         token1,
         token2,
         token3,
+        uni,
         factory,
         router2,
         weth,

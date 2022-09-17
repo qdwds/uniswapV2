@@ -36,6 +36,14 @@ export const token3 = async ():Promise<Contract> => {
     return token;
 }
 
+export const uniswapToken = async ():Promise<Contract> =>{
+    const TOKEN_NAME = "Uni"
+    const Token = await ethers.getContractFactory(TOKEN_NAME);
+    const token = await Token.deploy();
+    await token.deployed();
+    createContractInfo(token.address, TOKEN_NAME);
+    return token;
+}
 
 const token = [
     {

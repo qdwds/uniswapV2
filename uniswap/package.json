@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",
+    "openzeppelin-solidity-2.3.0": "npm:openzeppelin-solidity@2.3.0",
     "quickswap-sdk": "^3.0.9"
   }
 }

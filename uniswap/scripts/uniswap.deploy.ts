@@ -5,7 +5,7 @@ import { uniswapV2Factory } from "./uniswap/UniswapV2Factory"
 import { uniswapV2Router02 } from "./uniswap/UniswapV2Router02";
 import { WETH9 } from "./uniswap/WETH9";
 import { multicall } from "./uniswap/Multicall";
-import { token0, token1, token2, token3, tokens } from "./erc20/tokens";
+import { token0, token1, token2, token3, tokens ,uniswapToken} from "./erc20/tokens";
 
 const uniswap = async () => {
     const factory = await uniswapV2Factory("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
@@ -23,6 +23,7 @@ const uniswap = async () => {
     const t1 = await token1();
     const t2 = await token2();
     const t3 = await token3();
+    const uni = await uniswapToken();
     // const ts =  await tokens()
     // interface IStable {
     //     [name:string]:string
@@ -31,7 +32,7 @@ const uniswap = async () => {
     // for (let i = 0; i < ts.length; i++) {
     //    stable[await ts[i].symbol()] = ts[i].address;
     // }
-    // console.log(stable)
+    // console.log(stable);
     const info = {
         network: network.name,
         WETH9: weth.address,
@@ -43,11 +44,12 @@ const uniswap = async () => {
         token1: t1.address,
         token2: t2.address,
         token3: t3.address,
+        uni: uni.address
         // ...stable
     }
     console.log(info);
-    // const infoPath = resolve(join(__dirname,"../abi/uniswapV2.json"));
-    // await writeFileSync(infoPath, JSON.stringify(info));
+    const infoPath = resolve(join(__dirname,"../abi/uniswapV2.json"));
+    await writeFileSync(infoPath, JSON.stringify(info));
 }
 
 // 修改 uniswapV2Router2 hex
