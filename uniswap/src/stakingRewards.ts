@@ -32,16 +32,28 @@ const start = async () => {
     account = signer.address;
     const { token0, token1, uni, factory} = await createContracts(signer);
     const { stakingRewards, pair } = await deploy(signer, factory, token0, token1);
+    // 质押奖励代币到合约中
+    await stakingRewards.stake(parseUnits("100"))
+
+
     // 存入奖励token
-    await uni.transfer(stakingRewards.address, parseUnits("1000"));
-
+    await uni.transfer(pair.address, parseUnits("1000"));
+    await pair.approve(stakingRewards.address, parseUnits("1000"))
     // 设置奖励
-    const start = await stakingRewards.notifyRewardAmount(parseUnits("100"));
-    const transaction  = await start.wait()
+    await stakingRewards.notifyRewardAmount(parseUnits("100"));
 
+    // 开始结束时间
+    const startTime = await stakingRewards.lastUpdateTime();
+    const endTime = await stakingRewards.periodFinish();
+    console.log(startTime, endTime)
+    // 开始挖矿
 
-    // 质押LPToken开始挖矿
-    await mining(pair, stakingRewards)
+    
+    // 设置奖励
+    // const start = await stakingRewards.notifyRewardAmount(parseUnits("100"));
+    // const transaction  = await start.wait()
+
+   
 }
 
 // 质押 LPToken
