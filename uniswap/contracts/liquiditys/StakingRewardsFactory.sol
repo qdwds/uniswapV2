@@ -6,18 +6,21 @@ import 'openzeppelin-solidity-2.3.0/contracts/ownership/Ownable.sol';
 
 import './StakingRewards.sol';
 
+// 这是一个工厂合约，主要就是用来部署 StakingRewards 合约的。
 contract StakingRewardsFactory is Ownable {
     // immutables
-    // 用作奖励的代币
+    // 用作奖励的代币 uni
     address public rewardsToken;
-    // 质押挖矿开始时间
+    // 质押挖矿开始时间 什么时候开始挖矿
     uint public stakingRewardsGenesis;
 
     // the staking tokens for which the rewards contract has been deployed
     // 用来质押的代币数组 LPToken address
+    // 用来质押的代币数组，一般就是各交易对的 LPToken
     address[] public stakingTokens;
 
     // info about rewards for a particular staking token
+    // 即质押合约
     struct StakingRewardsInfo {
         address stakingRewards; //  质押合约地址
         uint rewardAmount;      //  质押合约每周期的奖励总量
@@ -25,6 +28,7 @@ contract StakingRewardsFactory is Ownable {
 
     // rewards info by staking token
     // 用来保存质押代币和质押合约之间的映射
+    // 用来保存质押代币和质押合约信息之间的映射
     mapping(address => StakingRewardsInfo) public stakingRewardsInfoByStakingToken;
 
     constructor(

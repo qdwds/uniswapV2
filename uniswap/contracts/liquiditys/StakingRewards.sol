@@ -8,7 +8,7 @@ import "openzeppelin-solidity-2.3.0/contracts/token/ERC20/SafeERC20.sol";
 import "openzeppelin-solidity-2.3.0/contracts/utils/ReentrancyGuard.sol";
 import "hardhat/console.sol";
 // Inheritance
-import "./interfaces/IStakingRewards.sol";
+import "../interfaces/IStakingRewards.sol";
 import "./RewardsDistributionRecipient.sol";
 
 contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, ReentrancyGuard {
@@ -53,11 +53,11 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
     }
 
     /* ========== VIEWS ========== */
-
+    // 总质押奖励
     function totalSupply() external view returns (uint256) {
         return _totalSupply;
     }
-
+    // 用户质押的余额
     function balanceOf(address account) external view returns (uint256) {
         return _balances[account];
     }
@@ -65,12 +65,14 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
     // 从当前区块时间和挖矿结束时间中，取最小值。
     // 挖矿未结束就是当前区块时间
     // 当完矿结束时 返回的就是 区块结束时间
+    // 有奖励的最近区块数
     function lastTimeRewardApplicable() public view returns (uint256) {
         return Math.min(block.timestamp, periodFinish);
     }
 
     // 获取每单位 质押代币的奖励数量
     // 挖矿结束后则 不会再产生增量，rewardPerTokenStored就不会增加。
+    // 每单位 Token 奖励数量
     function rewardPerToken() public view returns (uint256) {
         // 总质押量为0  就返回每次奖励
         if (_totalSupply == 0) {
@@ -85,6 +87,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
     }
     // 计算用户当前的挖矿奖励。
     // 计算 每质押单位代币的挖矿奖励
+    // 用户已赚但未提取的奖励数量
     function earned(address account) public view returns (uint256) {
         // 每质押代币的挖矿奖励 * 用户的质押额度 得到增量的总挖矿奖励 + 之前已经存储的挖矿奖励 = 当前总挖矿奖励
         return _balances[account].mul(rewardPerToken().sub(userRewardPerTokenPaid[account])).div(1e18).add(rewards[account]);
