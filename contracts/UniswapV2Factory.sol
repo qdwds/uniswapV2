@@ -241,8 +241,9 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
 
     // 记录交易对中两种价格的累积值
     // 用于unistap v2 所提供的价格预言机上。该数值会在每个区块的第一笔交易进行更新。
-    uint public price0CumulativeLast;
-    uint public price1CumulativeLast;
+    // 两个价格
+    uint public price0CumulativeLast;   //  x - y
+    uint public price1CumulativeLast;   //  y -x    
 
     // 记录某一时刻恒定乘积中的值，用于开发团队的手续费计算
     // reserve0 * reserve1, 最近一次流动性事件发生后立即生效
