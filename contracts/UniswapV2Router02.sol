@@ -322,7 +322,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
     ) {
         // 获取交易对地址 预测合约地址
         address pair = UniswapV2Library.pairFor(factory, tokenA, tokenB);
-        // 把流动性的代币转到 交易对(pair)地址中
+        // 把流动性的代币转到 交易对(pair)地址中    从router中转到用户
         IUniswapV2Pair(pair).transferFrom(msg.sender, pair, liquidity); // send liquidity to pair
         // 把流动性代币燃烧掉，把两个代币退换给to地址。记录退换的两种代币数量
         (uint amount0, uint amount1) = IUniswapV2Pair(pair).burn(to);

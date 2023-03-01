@@ -42,4 +42,4 @@ yarn dev
 
 笔记文档：[区块链笔记](https://www.yuque.com/qdwds)\
 哔哩哔哩：[视频合集](https://space.bilibili.com/449244768?spm_id_from=333.1007.0.0)\
-赞赏：0x0168996F9355fDf6Ba4b7E25Cc4f16Fd6AB9361c
+支持一下：0x0168996F9355fDf6Ba4b7E25Cc4f16Fd6AB9361c

@@ -140,7 +140,9 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
         assembly {
             chainId := chainid
         }
-        // eip712 授权 自动授权
+        // eip712 用来实现离线签名，
+        // 例如：质押挖矿,需要执行approve个transferform，
+        // 使用eip712离线签名就能直接调用签名信息，在一笔交易中授权和转账
         DOMAIN_SEPARATOR = keccak256(
             abi.encode(
                 // 用来消除歧义的salt，DOMAIN_SEPARATOR的最后措施。没太看懂。
@@ -287,6 +289,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         // console.log("data", data);
         console.log("data.length", data.length);
         console.log("abi.decode(data, (bool))", abi.decode(data, (bool)));
+        // 以下是防止transfer函数没有返回值报错 compound中使用另一种方式
         require(success && (data.length == 0 || abi.decode(data, (bool))), "UniswapV2: TRANSFER_FAILED");
     }
 
@@ -446,7 +449,10 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         } else {
             // 计算增量的token占总池子的比例，作为新币的数量。
             // 流动性 = 最小值(amount0 * _totalSupply - _reserve0 和 (amount1 * _totalSupply) / reserve1)
-            liquidity = Math.min(amount0.mul(_totalSupply) / _reserve0, amount1.mul(_totalSupply) / _reserve1);
+            liquidity = Math.min(
+                amount0.mul(_totalSupply) / _reserve0, 
+                amount1.mul(_totalSupply) / _reserve1
+            );
         }
         // 流动性必须大于0，否者相当于 没有增发流动性
         require(liquidity > 0, "UniswapV2: INSUFFICIENT_LIQUIDITY_MINTED");
